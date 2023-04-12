@@ -3,6 +3,7 @@ const app = express()
 const basicAuth = require('express-basic-auth')
 require('dotenv').config()
 const router = express.Router()
+const axious = require('axios')
 
 app.use(basicAuth({
     authorizer: (username, password,cb) =>{
@@ -23,17 +24,15 @@ app.use((req, res, next)=>{
     if (source_system === process.env.SOURCE_SYSTEM && router_id===process.env.ROUTER_ID) {
         next()
     } else {
-        res.send(401).json({msg:"unauthorized requests"})
+        res.sendStatus(401).json({msg:"Unauthorized requests"})
     }
 })
-
-
 
 app.get('/', (req, res) =>{
     res.status(200).json({status:200,msg:"request sent successfully"})
 })
 
-const PORT = 4040
+const PORT = 4050
 
 app.listen(PORT, ()=>{
 console.log(`server listening on ${PORT} ...`);
